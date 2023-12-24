@@ -25,9 +25,34 @@ Mining operations involve inherent risks, especially concerning the safety of mi
 ### Methane Concentration Prediction
 
 ```python
-# Code snippet for Methane Concentration Prediction
-# (Refer to Python script for detailed implementation)
-Temperature Prediction
+# Load the dataset
+data = pd.read_csv('C:/Users/chand/Dropbox/MyPC(LAPTOP OQ4HQNUC)/Downloads/database_iot9.csv')
+
+# Extract features and target variable for Methane Concentration
+X = data[['year', 'month', 'day', 'hour', 'minute', 'second', 'temperature', 'relative_humidity']]
+y = data[['methane_concentration']]
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Initialize the random forest regressor
+rf = RandomForestRegressor(n_estimators=600, max_depth=15, max_features=8, min_samples_split=5, random_state=40)
+
+# Fit the model to the training data
+rf.fit(X_train, y_train)
+
+# Predict the target variables for the testing data
+y_pred = rf.predict(X_test)
+
+# Calculate the mean squared error and R2 score of the model
+mse = mean_squared_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print('Mean squared error for Methane concentration:', mse)
+print('R2 score for Methane Concentration:', r2)
+python```
+
+###Temperature Prediction
 python
 Copy code
 # Code snippet for Temperature Prediction
