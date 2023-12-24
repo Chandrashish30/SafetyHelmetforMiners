@@ -1,4 +1,3 @@
-# SafetyHelmetforMiners
 # Mining Safety Helmet Data Analysis and Prediction
 
 ## Overview
@@ -13,12 +12,8 @@ Mining operations involve inherent risks, especially concerning the safety of mi
   - [Temperature Prediction](#temperature-prediction)
   - [Humidity Prediction](#humidity-prediction)
 - [Usage](#usage)
-- [Dataset](#dataset)
 - [Dependencies](#dependencies)
-- [Installation](#installation)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+
 
 ## Data Analysis and Prediction
 
@@ -50,41 +45,74 @@ r2 = r2_score(y_test, y_pred)
 
 print('Mean squared error for Methane concentration:', mse)
 print('R2 score for Methane Concentration:', r2)
-python```
+```
+### Temperature Prediction
 
-###Temperature Prediction
-python
-Copy code
-# Code snippet for Temperature Prediction
-# (Refer to Python script for detailed implementation)
-Humidity Prediction
-python
-Copy code
-# Code snippet for Humidity Prediction
-# (Refer to Python script for detailed implementation)
+```python
+# Extract features and target variable for Temperature
+X1 = data[['year', 'month', 'day', 'hour', 'minute', 'second', 'methane_concentration', 'relative_humidity']]
+y1 = data[['temperature']]
+
+# Split the data into training and testing sets
+X1_train, X1_test, y1_train, y1_test = train_test_split(X1, y1, test_size=0.2, random_state=42)
+
+# Initialize the random forest regressor
+rf1 = RandomForestRegressor(n_estimators=600, max_depth=15, max_features=8, min_samples_split=5, random_state=40)
+
+# Fit the model to the training data
+rf1.fit(X1_train, y1_train)
+
+# Predict the target variables for the testing data
+y1_pred = rf1.predict(X1_test)
+
+# Calculate the mean squared error and R2 score of the model
+mse1 = mean_squared_error(y1_test, y1_pred)
+r21 = r2_score(y1_test, y1_pred)
+
+print('Mean squared error for Temperature:', mse1)
+print('R2 score for Temperature:', r21)
+```
+### Humidity Prediction
+```python
+# Extract features and target variable for Humidity
+X2 = data[['year', 'month', 'day', 'hour', 'minute', 'second', 'temperature', 'methane_concentration']]
+y2 = data[['relative_humidity']]
+
+# Split the data into training and testing sets
+X2_train, X2_test, y2_train, y2_test = train_test_split(X2, y2, test_size=0.2, random_state=42)
+
+# Initialize the random forest regressor
+rf2 = RandomForestRegressor(n_estimators=600, max_depth=15, max_features=8, min_samples_split=5, random_state=40)
+
+# Fit the model to the training data
+rf2.fit(X2_train, y2_train)
+
+# Predict the target variables for the testing data
+y2_pred = rf2.predict(X2_test)
+
+# Calculate the mean squared error and R2 score of the model
+mse2 = mean_squared_error(y2_test, y2_pred)
+r22 = r2_score(y2_test, y2_pred)
+
+print('Mean squared error for Humidity:', mse2)
+print('R2 score for Humidity:', r22)
+
+```
 In the provided Python script, we utilize machine learning techniques, specifically the RandomForestRegressor from scikit-learn, to predict Methane Concentration, Temperature, and Humidity based on the collected dataset. The script evaluates model performance using mean squared error and R2 score metrics.
 
-Usage
+## Usage
 Clone the repository.
 Install the required dependencies (see Dependencies).
 Run the Python script for data analysis and prediction.
-Dataset
-The dataset used for this analysis was obtained from Elsevier and consists of environmental data collected from an active coal mine in China. The dataset provides valuable insights into factors contributing to safety hazards in mining operations.
 
-Dependencies
+## Dependencies
 pandas
 scikit-learn
 Install dependencies using:
 
-bash
-Copy code
+```python
 pip install pandas scikit-learn
-Installation
-No specific installation steps are required for this component. Ensure you have Python installed, and install the necessary dependencies.
+```
 
-Contributing
-Fork the repository.
-Create a new branch (git checkout -b feature/new-feature).
-Make changes and commit (git commit -am 'Add new feature').
-Push to the branch (git push origin feature/new-feature).
-Create a pull request.
+
+
